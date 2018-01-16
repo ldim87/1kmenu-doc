@@ -13,4 +13,4 @@
 Всегда пишите блоковую документацию прямо в коде:
 * Для PHP - [phpDoc](https://phpdoc.org/)
 * Для JS - [JSDoc](http://usejsdoc.org/)
-* Markdown для общей документации - [Документационный репозиторий 1000.menu](https://github.com/ldim87/1kmenu-doc)
+* Для CSS - блоковые комментарии в [LESS файлах](http://lesscss.org/features/#features-overview-feature-comments)
