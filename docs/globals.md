@@ -86,6 +86,10 @@ $GLOBALS['menu_link']['this'][] = '<a href="/test/admin">Админка чего
 ?>
 ```
 
+## $GLOBALS['xrlocale']
+
+Объект для загрузки мультиязычных сообщений. Более подробно и мультизячности читай [здесь](/globals/xrlang).
+
 ## $GLOBALS['sql_debug']
 
 Отладка SQL запросов. Включается с помощью УРЛ параметра **sql_stats_debug=1**
