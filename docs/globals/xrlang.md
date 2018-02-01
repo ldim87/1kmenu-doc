@@ -15,13 +15,21 @@ class SomeClass {
 	// подкласс для мультиязычных сообщений
 	protected $XrLang;
 
-	// инициализации сообщений
-	function init_locale(XrLang $lang_class, $sys = array()){
+	function __construct($opt = array()){
+		// загрузка мультиязычных сообщений
+		$this->init_locale(
+			!empty($opt['locale_lang']) ? $opt['locale_lang'] : '',
+			!empty($opt['locale_settings']) ? $opt['locale_settings'] : array()
+		);
+	}
+
+	// инициализация сообщений
+	function init_locale($lang = '', $sys = array()){
 		// сохраняем в локальную переменную
-		$this->XrLang = $lang_class;
+		$this->XrLang = new XrLang();
 		
-		// настройка языка
-		$this->XrLang->set_lang($GLOBALS['user']['lang']);
+		// настройка языка (опционально, по умолчанию и так используется $GLOBALS['user']['lang'])
+		// $this->XrLang->set_lang($lang ? $lang : $GLOBALS['user']['lang']);
 
 		// загрузка сообщений
 		$this->XrLang->load(
@@ -37,11 +45,6 @@ class SomeClass {
 
 	// загрузка сообщений
 	function imes($message_id){
-		// Если подкласс не был настроен, возвращаем код сообщения
-		if(is_null($this->XrLang)){
-			return $message_id;
-		}
-		
 		// Загрузка сообщений
 		return call_user_func_array(
 			array($this->XrLang, 'get'), 
@@ -74,18 +77,12 @@ class SomeClass {
 // загрузка класса
 require '/path/to/the/some_class.php';
 
-// возможные настройки
+// возможные настройки для админа
 $debug = !empty($_GET['debug']) && user_admin();
-$cache = true;
+$cache = empty($_GET['nocache']) || !user_admin();
 
 // инициализация
-$some_class = new SomeClass(
-	new XrLang(),
-	array(
-		'debug' => $debug,
-		'cache' => $cache
-	)
-);
+$some_class = new SomeClass();
 
 echo $some_class->say_hello(); // Привет всем!
 echo $some_class->imes('bye'); // Пока!

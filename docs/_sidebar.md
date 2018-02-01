@@ -8,4 +8,7 @@
 	- [JS - основное](main_js.md)
 		- [JS doc](http://vgit1.aynos.cz/jsdoc/1kmenu/)
 	- [PHP doc](http://vgit1.aynos.cz/phpdoc/1kmenu/)
+		- [Работа с базой данных](/php/db)
+		- [Обработка форм](/php/forms)
+		- [Мультиязычная локализация](/globals/xrlang)
 	- [CSS шаблоны](http://vgit1.aynos.cz/cssdoc/1kmenu/)
