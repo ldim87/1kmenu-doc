@@ -13,39 +13,44 @@
 class SomeClass {
 
 	// подкласс для мультиязычных сообщений
-	protected $XrLang;
+	private $XrLang;
 
-	function __construct($opt = array()){
-		// загрузка мультиязычных сообщений
-		$this->init_locale(
-			!empty($opt['locale_lang']) ? $opt['locale_lang'] : '',
-			!empty($opt['locale_settings']) ? $opt['locale_settings'] : array()
-		);
-	}
+	// готовность мультиязычности (для ленивой загрузки класса)
+	private $locale_initiated;
+
+	// ключ мультиязычных сообщений
+	private $locale_key = 'my_type';
 
 	// инициализация сообщений
-	function init_locale($lang = '', $sys = array()){
+	function init_locale($sys = array()){
 		// сохраняем в локальную переменную
 		$this->XrLang = new XrLang();
 		
 		// настройка языка (опционально, по умолчанию и так используется $GLOBALS['user']['lang'])
-		// $this->XrLang->set_lang($lang ? $lang : $GLOBALS['user']['lang']);
-
+		if(!empty($sys['lang'])){
+			$this->XrLang->set_lang($sys['lang']);
+		}
+		
 		// загрузка сообщений
-		$this->XrLang->load(
-			'my_type',	// ключ для мультиязычных сообщений
-			array(
-				// debug - default off
-				'debug' => !empty($sys['debug']),
-				// cache - default on
-				'cache' => !isset($sys['cache']) || !empty($sys['cache'])
-			)
-		);
+		$this->locale_initiated = $this->XrLang->load( $this->locale_key );
+
+		// возвращаем статус
+		return $this->locale_initiated;
 	}
 
 	// загрузка сообщений
 	function imes($message_id){
-		// Загрузка сообщений
+		// ленивая загрузка мультиязычности
+		if(is_null($this->locale_initiated)){
+			$this->init_locale();
+		}
+
+		// если не удалось подгрузить класс мультиязычности
+		if($this->locale_initiated == false){
+			return $message_id;
+		}
+
+		// если все ок, возвращаем мультиязычное сообщение
 		return call_user_func_array(
 			array($this->XrLang, 'get'), 
 			func_get_args()
@@ -54,7 +59,6 @@ class SomeClass {
 
 	// теперь можно вызывать любые сообщения
 	function say_hello(){
-		// напр.
 		return $this->imes('say_hello');
 	}
 }
@@ -77,13 +81,10 @@ class SomeClass {
 // загрузка класса
 require '/path/to/the/some_class.php';
 
-// возможные настройки для админа
-$debug = !empty($_GET['debug']) && user_admin();
-$cache = empty($_GET['nocache']) || !user_admin();
-
 // инициализация
 $some_class = new SomeClass();
 
+// выдача мультиязычных сообщений
 echo $some_class->say_hello(); // Привет всем!
 echo $some_class->imes('bye'); // Пока!
 

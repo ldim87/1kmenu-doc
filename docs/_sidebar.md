@@ -11,4 +11,5 @@
 		- [Работа с базой данных](/php/db)
 		- [Обработка форм](/php/forms)
 		- [Мультиязычная локализация](/globals/xrlang)
+		- [Кэширование запросов в классах](/php/class_cache)
 	- [CSS шаблоны](http://vgit1.aynos.cz/cssdoc/1kmenu/)
