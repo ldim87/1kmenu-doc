@@ -5,8 +5,9 @@
 	- [Настройка площадки](workplace.md)
 
 - Функции движка
-	- [JS - основное](main_js.md)
-		- [JS doc](http://vgit1.aynos.cz/jsdoc/1kmenu/)
+	- [JS doc](http://vgit1.aynos.cz/jsdoc/1kmenu/)
+		- [Основные глобальные ф-ции](main_js.md)
+		- [Загрузчик файлов](js/uploader.md)
 	- [PHP doc](http://vgit1.aynos.cz/phpdoc/1kmenu/)
 		- [Работа с базой данных](/php/db)
 		- [Обработка форм](/php/forms)
