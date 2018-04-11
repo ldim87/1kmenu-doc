@@ -26,7 +26,7 @@ if($result['status']){
 $result = mysql_do('INSERT INTO some_table (column) VALUES (\'foo\', \'bar\')');
 // $result is integer
 if($result){
-	otvet_ok("New row ID is {$result}");
+	otvet_ok("New row ID is $result");
 }
 
 $result = mysql_do('UPDATE some_table SET column = \'foo\' WHERE id = 2');
@@ -78,8 +78,8 @@ $products = mysql_get_arr(
 // Now you can iterate through the items array
 if($products){
 	foreach($products as $key => $product){
-		echo "Product ID: {$product['id']} \n";
-		echo "Product name: {$product['name']} \n";
+		echo "Product ID: ".$product['id']." \n";
+		echo "Product name: ".$product['name']." \n";
 		// ..
 	}
 } else {
@@ -125,8 +125,8 @@ $product = mysql_get_list(
 
 // Now you can access data
 if($product){
-	echo "Product ID: {$product['id']} \n";
-	echo "Product name: {$product['name']} \n";
+	echo "Product ID: ".$product['id']." \n";
+	echo "Product name: ".$product['name']." \n";
 	// ..
 } else {
 	echo "Product is not found";
@@ -170,6 +170,6 @@ $products_count = mysql_get_val(
 );
 
 // Now you can access data
-echo "Total products count: {$products_count}";
+echo "Total products count: $products_count";
 ?>
 ```
